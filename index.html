@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="URL, URL Shortener, Link Shortener, Shortened link, Short URL, URL management, Link personalize">
+    <meta name="author" content="Jaro Brichau">
+    <meta name="description" content="Linkly is an efficient and easy-to-use URL shortening service that streamlines your online experience.">
+    <meta name="title" content="Linkly | URL Shortener" />
+
+    <title>Linkly | URL Shortener</title>
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://www.jarobrichau.be/" />
+    <meta property="og:title" content="Linkly | The best URL shortener in Belgium" />
+    <meta property="og:description"
+        content="Linkly offers an efficient and user-friendly URL shortening service, streamlining your online experience. Create shorter, more powerful links effortlessly, enhancing your web presence. Optimize your online marketing efforts with our reliable URL management solution." />
+    <meta property="og:image" content="https://www.jarobrichau.be/metatag.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="http://www.jarobrichau.be/" />
+    <meta property="twitter:title" content="Studio Rochau | UX/UI brand designer" />
+    <meta property="twitter:description"
+        content="Linkly offers an efficient and user-friendly URL shortening service, streamlining your online experience. Create shorter, more powerful links effortlessly, enhancing your web presence. Optimize your online marketing efforts with our reliable URL management solution." />
+    <meta property="twitter:image" content="https://www.jarobrichau.be/metatag.png" />
+
+    <!-- Meta Tags Generated with https://metatags.io -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Stijl om de tekst altijd zwart te maken */
+        input[type="text"] {
+            color: black !important;
+        }
+    </style>
+</head>
+<div class="bg-red-600 px-4 py-3 text-white">
+    <p class="text-center text-sm font-medium">
+        This tool is in beta phase. Please report any issues to <a href="mailto:jaro.brichau@outlook.com" class="underline">jaro.brichau@outlook.com</a>.
+    </p>
+    
+  </div>
+<body class="min-h-screen bg-indigo-900 text-white">
+    <header class="flex items-center justify-between p-6">
+        
+        <h1 class="text-4xl font-bold">Linkly<span class="text-blue-500">✨</span></h1>
+        <div class="space-x-4" style="position: relative;">
+            <div class="fixed bottom-6 right-6" style="z-index: 9999;">
+                <a href="https://www.buymeacoffee.com/yourusername" target="_blank" rel="noopener noreferrer" class="bg-yellow-500 text-white font-medium rounded-md px-4 py-2 flex items-center justify-center hover:bg-yellow-600 transition duration-300 ease-in-out shadow-lg">
+                    <span class="text-lg mr-2">☕</span>
+                    Buy me a coffee
+                </a>
+            </div>
+        </div>
+        
+    </header>
+    <main class="px-6">
+        <section class="my-12 text-center">
+            <h2 class="mb-4 text-5xl font-bold">Shorten your <span class="text-blue-500">loooong links</span> :)</h2>
+            <p class="mb-6 text-lg text-gray-400">Linkly is an efficient and easy-to-use URL shortening service that
+                streamlines your online experience.</p>
+            <div class="flex items-center justify-center space-x-4">
+                <input id="longUrl" class="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-1/3 rounded-md rounded-l border px-4 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    placeholder="Enter the link here" style="color: black !important"/>
+                <button onclick="shortenUrl()" class="ring-offset-background focus-visible:ring-ring inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md rounded-r bg-blue-500 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">Shorten
+                    Now!</button>
+            </div>
+            <p class="mt-4 text-gray-400">Auto paste from clipboard</p>
+
+        </section>
+        <section class="overflow-x-auto">
+            <div class="relative w-full overflow-auto">
+                <table class="w-full caption-bottom text-sm">
+                    <thead class="[&amp;_tr]:border-b">
+                        <tr class="hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors">
+                            <th class="text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 h-12 px-4 text-left align-middle font-medium">Short
+                                link</th>
+                            <th class="text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 h-12 px-4 text-left align-middle font-medium">Original
+                                link</th>
+                            <th class="text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 h-12 px-4 text-left align-middle font-medium">QR
+                                code</th>
+                            <th class="text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 h-12 px-4 text-left align-middle font-medium">Clicks</th>
+                            <th class="text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 h-12 px-4 text-left align-middle font-medium">Status</th>
+                            <th class="text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 h-12 px-4 text-left align-middle font-medium">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody class="[&amp;_tr:last-child]:border-0">
+                        <!-- Table rows will be added dynamically here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function addRow(shortenedUrl, originalUrl, clicks, status, date) {
+            var tbody = document.querySelector("tbody");
+
+            var newRow = document.createElement("tr");
+            newRow.classList.add("hover:bg-muted/50", "data-[state=selected]:bg-muted", "border-b", "transition-colors");
+
+            var shortLinkCell = document.createElement("td");
+            shortLinkCell.classList.add("[&amp;:has([role=checkbox])]:pr-0", "p-4", "align-middle", "font-medium");
+            shortLinkCell.innerText = shortenedUrl;
+
+            var originalLinkCell = document.createElement("td");
+            originalLinkCell.classList.add("[&amp;:has([role=checkbox])]:pr-0", "p-4", "align-middle");
+            originalLinkCell.innerHTML = originalUrl;
+
+            var qrCodeCell = document.createElement("td");
+            qrCodeCell.classList.add("[&amp;:has([role=checkbox])]:pr-0", "p-4", "align-middle");
+            var qrCodeImg = document.createElement("img");
+            qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(shortenedUrl)}`;
+            qrCodeCell.appendChild(qrCodeImg);
+
+            var clicksCell = document.createElement("td");
+            clicksCell.classList.add("[&amp;:has([role=checkbox])]:pr-0", "p-4", "align-middle");
+            clicksCell.innerText = clicks;
+
+            var statusCell = document.createElement("td");
+            statusCell.classList.add("[&amp;:has([role=checkbox])]:pr-0", "p-4", "align-middle");
+            statusCell.innerText = status;
+
+            var dateCell = document.createElement("td");
+            dateCell.classList.add("[&amp;:has([role=checkbox])]:pr-0", "p-4", "align-middle");
+            dateCell.innerText = date;
+
+            newRow.appendChild(shortLinkCell);
+            newRow.appendChild(originalLinkCell);
+            newRow.appendChild(qrCodeCell);
+            newRow.appendChild(clicksCell);
+            newRow.appendChild(statusCell);
+            newRow.appendChild(dateCell);
+
+            tbody.insertBefore(newRow, tbody.firstChild);
+        }
+
+        async function shortenUrl() {
+            const longUrl = document.getElementById('longUrl').value;
+            const apiUrl = `https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                if (response.ok) {
+                    const shortenedUrl = await response.text();
+                    var storedLinks = {
+                        shortenedLink: shortenedUrl,
+                        originalLink: `<a class="text-blue-500" href="${longUrl}">${longUrl}</a>`
+                    };
+                    localStorage.setItem("storedLinks", JSON.stringify(storedLinks));
+                    var currentDate = new Date().toLocaleString();
+                    addRow(shortenedUrl, storedLinks.originalLink, 0, 'Active', currentDate);
+                } else {
+                    console.error('Failed to shorten URL');
+                }
+            } catch (error) {
+                console.error('Error occurred:', error);
+            }
+        }
+
+        window.onload = function () {
+            // Load stored links from localStorage if available
+            var storedLinks = JSON.parse(localStorage.getItem("storedLinks"));
+            if (storedLinks) {
+                addRow(storedLinks.shortenedLink, storedLinks.originalLink, 0, 'Active', new Date().toLocaleString());
+            }
+        };
+    </script>
+
+</body>
+
+</html>
+<section class="py-10 bg-gray-100 sm:py-16 lg:py-24 mt-32">
+    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="max-w-2xl mx-auto text-center">
+            <h2 class="text-3xl font-bold leading-tight text-gray-800 sm:text-4xl lg:text-5xl">Trusted by <span class="text-blue-600">30k+</span> world class companies & design teams</h2>
+        </div>
+
+        <div class="grid max-w-xl grid-cols-1 mx-auto mt-8 text-center lg:max-w-full sm:mt-12 lg:mt-20 lg:grid-cols-3 gap-x-6 xl:gap-x-12 gap-y-6">
+            <div class="overflow-hidden bg-white rounded-md shadow">
+                <div class="px-8 py-12">
+                    <div class="relative w-24 h-24 mx-auto">
+                        <img class="relative object-cover w-24 h-24 mx-auto rounded-full" src="https://cdn.rareblocks.xyz/collection/celebration/images/testimonials/1/avatar-1.jpg" alt="" />
+                        <div class="absolute top-0 right-0 flex items-center justify-center bg-blue-600 rounded-full w-7 h-7">
+                            <svg class="w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M20.309 17.708C22.196 15.66 22.006 13.03 22 13V5a1 1 0 0 0-1-1h-6c-1.103 0-2 .897-2 2v7a1 1 0 0 0 1 1h3.078a2.89 2.89 0 0 1-.429 1.396c-.508.801-1.465 1.348-2.846 1.624l-.803.16V20h1c2.783 0 4.906-.771 6.309-2.292zm-11.007 0C11.19 15.66 10.999 13.03 10.993 13V5a1 1 0 0 0-1-1h-6c-1.103 0-2 .897-2 2v7a1 1 0 0 0 1 1h3.078a2.89 2.89 0 0 1-.429 1.396c-.508.801-1.465 1.348-2.846 1.624l-.803.16V20h1c2.783 0 4.906-.771 6.309-2.292z"
+                                ></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <blockquote class="mt-7">
+                        <p class="text-lg text-black">“Amet minim mollit non deserunt ullam co est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat”</p>
+                    </blockquote>
+                    <p class="text-base font-semibold tex-tblack mt-9">Jenny Wilson</p>
+                    <p class="mt-1 text-base text-gray-600">Project Manager at Microsoft</p>
+                </div>
+            </div>
+
+            <div class="overflow-hidden bg-white rounded-md shadow">
+                <div class="px-8 py-12">
+                    <div class="relative w-24 h-24 mx-auto">
+                        <img class="relative object-cover w-24 h-24 mx-auto rounded-full" src="https://cdn.rareblocks.xyz/collection/celebration/images/testimonials/1/avatar-2.jpg" alt="" />
+                        <div class="absolute top-0 right-0 flex items-center justify-center bg-blue-600 rounded-full w-7 h-7">
+                            <svg class="w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M20.309 17.708C22.196 15.66 22.006 13.03 22 13V5a1 1 0 0 0-1-1h-6c-1.103 0-2 .897-2 2v7a1 1 0 0 0 1 1h3.078a2.89 2.89 0 0 1-.429 1.396c-.508.801-1.465 1.348-2.846 1.624l-.803.16V20h1c2.783 0 4.906-.771 6.309-2.292zm-11.007 0C11.19 15.66 10.999 13.03 10.993 13V5a1 1 0 0 0-1-1h-6c-1.103 0-2 .897-2 2v7a1 1 0 0 0 1 1h3.078a2.89 2.89 0 0 1-.429 1.396c-.508.801-1.465 1.348-2.846 1.624l-.803.16V20h1c2.783 0 4.906-.771 6.309-2.292z"
+                                ></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <blockquote class="mt-7">
+                        <p class="text-lg text-black">“Amet minim mollit non deserunt ullam co est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat”</p>
+                    </blockquote>
+                    <p class="text-base font-semibold tex-tblack mt-9">Robert Fox</p>
+                    <p class="mt-1 text-base text-gray-600">Founder at Brain.co</p>
+                </div>
+            </div>
+
+            <div class="overflow-hidden bg-white rounded-md shadow">
+                <div class="px-8 py-12">
+                    <div class="relative w-24 h-24 mx-auto">
+                        <img class="relative object-cover w-24 h-24 mx-auto rounded-full" src="https://cdn.rareblocks.xyz/collection/celebration/images/testimonials/1/avatar-3.jpg" alt="" />
+                        <div class="absolute top-0 right-0 flex items-center justify-center bg-blue-600 rounded-full w-7 h-7">
+                            <svg class="w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M20.309 17.708C22.196 15.66 22.006 13.03 22 13V5a1 1 0 0 0-1-1h-6c-1.103 0-2 .897-2 2v7a1 1 0 0 0 1 1h3.078a2.89 2.89 0 0 1-.429 1.396c-.508.801-1.465 1.348-2.846 1.624l-.803.16V20h1c2.783 0 4.906-.771 6.309-2.292zm-11.007 0C11.19 15.66 10.999 13.03 10.993 13V5a1 1 0 0 0-1-1h-6c-1.103 0-2 .897-2 2v7a1 1 0 0 0 1 1h3.078a2.89 2.89 0 0 1-.429 1.396c-.508.801-1.465 1.348-2.846 1.624l-.803.16V20h1c2.783 0 4.906-.771 6.309-2.292z"
+                                ></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <blockquote class="mt-7">
+                        <p class="text-lg text-black">“Amet minim mollit non deserunt ullam co est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat”</p>
+                    </blockquote>
+                    <p class="text-base font-semibold tex-tblack mt-9">Kristin Watson</p>
+                    <p class="mt-1 text-base text-gray-600">UX Designer at Google</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
